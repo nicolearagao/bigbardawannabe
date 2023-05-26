@@ -1,0 +1,8 @@
+*.flake8
+*.env
+*venv/
+*.pyc
+*.pyo
+__pycache__/
+/healthTracker
+*.db

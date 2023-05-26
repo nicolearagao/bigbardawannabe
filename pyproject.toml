@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "healthtracker"
+version = "0.1.0"
+description = ""
+authors = ["Nicole Aragao <nicolearagao@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "0.70.0"
+uvicorn = "0.22.0"
+pydantic = "1.10.7"
+sqlalchemy = "^2.0.15"
+black = "^23.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
