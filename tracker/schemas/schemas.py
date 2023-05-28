@@ -31,10 +31,8 @@ class UserOptional(UserSchema):
 
 
 class DailyInfoSchema(Base):
-    id: int = Field(default=None)
-    created_at: datetime = Field(default=None)
-    user_id: int = Field(description="Foreign key referencing the User table")
-    water_intake: float # todo implement warning which will calculate minimum amount of water needed per day looking at weight, height and exercise
+    user_id: Optional[int] = Field(description="Foreign key referencing the User table")
+    water_intake: Optional[float] = None # todo implement warning which will calculate minimum amount of water needed per day looking at weight, height and exercise
 
     @validator("water_intake")
     def validate_water_intake(cls, value):
