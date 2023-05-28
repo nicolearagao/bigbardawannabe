@@ -9,10 +9,10 @@ class FitnessMetrics(Base, BaseMixin):
     __tablename__ = "fitness_metrics"
 
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    weight = Column(Float)
-    weight_goal = Column(Float)
-    height = Column(Float)
-    fat_percentage = Column(Integer)
-    calorie_intake = Column(Integer)
+    weight = Column(Float, nullable=True, default=None)
+    weight_goal = Column(Float, nullable=True, default=None)
+    height = Column(Float, nullable=True, default=None)
+    fat_percentage = Column(Integer, nullable=True, default=None)
+    calorie_intake = Column(Integer, nullable=True, default=None)
 
     user = relationship("User", uselist=False, backref="fitness_metrics")

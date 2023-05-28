@@ -2,15 +2,7 @@ import re
 from datetime import datetime
 
 from pydantic import validator, Field
-<<<<<<< HEAD
-<<<<<<< HEAD
-from typing import List
-=======
 from typing import Optional
->>>>>>> 143f78d (fixup! feature(schemas): add schemas folder)
-=======
-from typing import List, Optional
->>>>>>> 7ba629e (feature(routes): add user)
 
 from tracker.schemas.base import Base
 from tracker.schemas.enumerators import CardioType, CheatMealType, SBD, PersonalRecordType
@@ -90,23 +82,23 @@ class Single(Base):
     session_weight: float
 
 
-class FitnessMetrics(Base):
-    user_id: int = Field("Foreign key referencing the User table")
-    weight: float
-    height: float
-    fat_percentage: int
-    weight_goal: float
-    calorie_intake: int # todo implement validator which will look to height and weight and will calculate minimum amount of calories needed 
+class FitnessMetricsSchema(Base):
+    user_id: Optional[int] = Field("Foreign key referencing the User table")
+    weight: Optional[float] = Field(None)
+    height: Optional[float] = Field(None)
+    fat_percentage: Optional[int] = Field(None)
+    weight_goal: Optional[float] = Field(None)
+    calorie_intake: Optional[int] = Field(None) # todo implement validator which will look to height and weight and will calculate minimum amount of calories needed 
 
     @validator("weight", "weight_goal", "height", "calorie_intake")
     def validate_positive_value(cls, value):
-        if value <= 0:
+        if value is not None and value <= 0:
             raise ValueError("Value must be a positive number.")
         return value
     
     @validator("fat_percentage")
     def validate_fat_percentage(cls, value):
-        if value < 0 or value > 100:
+        if value is not None and (value < 0 or value > 100):
             raise ValueError("Fat percentage must be between 0 and 100.")
         return value
 
