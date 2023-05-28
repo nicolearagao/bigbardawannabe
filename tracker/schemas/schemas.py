@@ -3,10 +3,14 @@ from datetime import datetime
 
 from pydantic import validator, Field
 <<<<<<< HEAD
+<<<<<<< HEAD
 from typing import List
 =======
 from typing import Optional
 >>>>>>> 143f78d (fixup! feature(schemas): add schemas folder)
+=======
+from typing import List, Optional
+>>>>>>> 7ba629e (feature(routes): add user)
 
 from tracker.schemas.base import Base
 from tracker.schemas.enumerators import CardioType, CheatMealType, SBD, PersonalRecordType
@@ -22,8 +26,11 @@ class UserSchema(Base):
             raise ValueError("Password must contain at least 8 characters and a number.")
         return value
 
+class UserOptional(UserSchema):
+    __annotations__ = {k: Optional[v] for k, v in UserSchema.__annotations__.items()}
 
-class DailyInfo(Base):
+
+class DailyInfoSchema(Base):
     id: int = Field(default=None)
     created_at: datetime = Field(default=None)
     user_id: int = Field(description="Foreign key referencing the User table")
