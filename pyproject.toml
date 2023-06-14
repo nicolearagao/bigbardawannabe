@@ -12,6 +12,7 @@ uvicorn = "0.22.0"
 pydantic = "1.10.7"
 sqlalchemy = "^2.0.15"
 black = "^23.3.0"
+pytest-mock = "^3.10.0"
 
 
 [build-system]
