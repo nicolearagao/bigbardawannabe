@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Float, ForeignKey, Enum, DateTime, Integer
+from sqlalchemy import Column, Float, ForeignKey, Enum, DateTime, Integer, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from tracker.db.base import BaseMixin
@@ -16,3 +16,5 @@ class PersonalRecords(Base, BaseMixin):
     weight = Column(Float)
 
     user = relationship("User", backref="personal_records")
+
+    __table_args__ = (UniqueConstraint("user_id"))

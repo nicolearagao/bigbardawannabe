@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, Enum
+from sqlalchemy import Column, ForeignKey, Integer, Enum, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from tracker.db.base import BaseMixin
@@ -14,3 +14,5 @@ class Cardio(Base, BaseMixin):
     type = Column(Enum(CardioType))
 
     daily_info = relationship("DailyInfo", uselist=False, backref="cardio")
+
+    __table_args__ = (UniqueConstraint("daily_info_id"))

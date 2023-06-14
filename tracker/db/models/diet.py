@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, Boolean, Enum
+from sqlalchemy import Column, ForeignKey, Integer, Boolean, Enum, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from tracker.db.base import BaseMixin
@@ -16,3 +16,4 @@ class Diet(Base, BaseMixin):
 
     daily_info = relationship("DailyInfo", uselist=False, backref="diet")
 
+    __table_args__ = (UniqueConstraint("daily_info_id"))
