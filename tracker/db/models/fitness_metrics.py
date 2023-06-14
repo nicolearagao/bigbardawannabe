@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Float, ForeignKey, Integer
+from sqlalchemy import Column, Float, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from tracker.db.base import BaseMixin
@@ -16,3 +16,5 @@ class FitnessMetrics(Base, BaseMixin):
     calorie_intake = Column(Integer, nullable=True, default=None)
 
     user = relationship("User", uselist=False, backref="fitness_metrics")
+
+    __table_args__ = (UniqueConstraint("user_id"))

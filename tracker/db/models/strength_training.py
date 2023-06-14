@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, Boolean, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from tracker.db.base import BaseMixin
@@ -13,3 +13,5 @@ class StrengthTraining(Base, BaseMixin):
     accessory_exercises = Column(Boolean)
 
     daily_info = relationship("DailyInfo", uselist=False, backref="strength_training")
+
+    __table_args__ = (UniqueConstraint("daily_info_id"))
