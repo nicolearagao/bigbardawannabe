@@ -16,4 +16,4 @@ class Diet(Base, BaseMixin):
 
     daily_info = relationship("DailyInfo", uselist=False, backref="diet")
 
-    __table_args__ = (UniqueConstraint("daily_info_id"))
+    __table_args__ = (UniqueConstraint("daily_info_id"),)

@@ -17,4 +17,4 @@ class PersonalRecords(Base, BaseMixin):
 
     user = relationship("User", backref="personal_records")
 
-    __table_args__ = (UniqueConstraint("user_id"))
+    __table_args__ = (UniqueConstraint("user_id"),)

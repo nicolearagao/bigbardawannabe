@@ -15,4 +15,4 @@ class Cardio(Base, BaseMixin):
 
     daily_info = relationship("DailyInfo", uselist=False, backref="cardio")
 
-    __table_args__ = (UniqueConstraint("daily_info_id"))
+    __table_args__ = (UniqueConstraint("daily_info_id"),)

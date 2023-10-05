@@ -17,4 +17,4 @@ class FitnessMetrics(Base, BaseMixin):
 
     user = relationship("User", uselist=False, backref="fitness_metrics")
 
-    __table_args__ = (UniqueConstraint("user_id"))
+    __table_args__ = (UniqueConstraint("user_id"),)

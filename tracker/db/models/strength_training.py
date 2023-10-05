@@ -14,4 +14,4 @@ class StrengthTraining(Base, BaseMixin):
 
     daily_info = relationship("DailyInfo", uselist=False, backref="strength_training")
 
-    __table_args__ = (UniqueConstraint("daily_info_id"))
+    __table_args__ = (UniqueConstraint("daily_info_id"),)

@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends,HTTPException
+from fastapi import APIRouter, Depends,HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import MultipleResultsFound,NoResultFound
 from typing import List
 
 from tracker.schemas.schemas import UserSchema, UserOptional
@@ -10,7 +11,13 @@ router = APIRouter()
 
 @router.post("/", response_model=UserSchema)
 def create_user(user: UserSchema, db: Session = Depends(get_db)):
-    existing_user = db.query(User).filter(User.username == user.username).first()
+    try:
+        existing_user = db.query(User).filter(User.username == user.username).one_or_none()
+    except MultipleResultsFound:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Multiple users with the same username found."
+        )
     if existing_user:
         raise HTTPException(status_code=400, detail="Username already registered")
     db_user = User(**user.dict())
@@ -18,6 +25,31 @@ def create_user(user: UserSchema, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def check_existing_user(db: Session, username: str) -> bool:
+    existing_user = db.query(User).filter(User.username == username).one_or_none()
+    return existing_user is not None
+
+def create_user(user: UserSchema, db: Session) -> User:
+    if check_existing_user(db, user.username):
+        raise HTTPException(status_code=400, detail="Username already registered")
+
+    db_user = User(**user.dict())
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+@router.post("/", response_model=UserSchema)
+def create_user_endpoint(user: UserSchema, db: Session = Depends(get_db)):
+    try:
+        return create_user(user, db)
+    except MultipleResultsFound:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Multiple users with the same username found."
+        )
 
 
 @router.get("/", response_model=List[UserSchema])

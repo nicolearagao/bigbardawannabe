@@ -14,4 +14,4 @@ class SupplementsTaken(Base, BaseMixin):
 
     diet = relationship("Diet", backref="supplements_taken")
 
-    __table_args__ = (UniqueConstraint("diet_id"))
+    __table_args__ = (UniqueConstraint("diet_id"),)
